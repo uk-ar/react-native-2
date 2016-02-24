@@ -831,6 +831,17 @@ class AnimatedInterpolation extends AnimatedWithChildren {
     return new AnimatedInterpolation(this, Interpolation.create(config));
   }
 
+  addListener(callback: ValueListenerCallback): string {
+    //type ValueListenerCallback = (state: {value: number}) => void;
+    return this._parent.addListener(({value: number})=>{
+      callback({value:this._interpolation(number)})
+    });
+  }
+
+  removeListener(id: string): void {
+    delete this._parent.removeListener(id);
+  }
+
   __attach(): void {
     this._parent.__addChild(this);
   }
